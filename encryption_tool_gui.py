@@ -7,7 +7,6 @@ from aes_encryption import encrypt_file, decrypt_file, decrypt_file_with_key
 from rsa_encryption import generate_rsa_keys, rsa_encrypt, rsa_decrypt
 
 
-
 class EncryptionToolApp:
     def __init__(self, root):
         self.root = root
@@ -170,7 +169,7 @@ class AESWindow:
 
         # Create a Notebook (tabbed interface)
         self.notebook = ttk.Notebook(self.aes_frame)
-        self.notebook.pack(expand=1, fill='both')
+        self.notebook.pack(expand=1, fill="both")
 
         # Create frames for Encrypt and Decrypt tabs
         self.encrypt_frame = ttk.Frame(self.notebook)
@@ -192,38 +191,59 @@ class AESWindow:
         tk.Label(self.encrypt_frame, text="Input File:").grid(row=0, column=0, pady=5)
         self.input_entry_encrypt = tk.Entry(self.encrypt_frame, width=50)
         self.input_entry_encrypt.grid(row=0, column=1, padx=10)
-        tk.Button(self.encrypt_frame, text="Browse", command=self.browse_input_file_encrypt).grid(row=0, column=2, padx=10)
+        tk.Button(
+            self.encrypt_frame, text="Browse", command=self.browse_input_file_encrypt
+        ).grid(row=0, column=2, padx=10)
 
         tk.Label(self.encrypt_frame, text="Output File:").grid(row=1, column=0, pady=5)
         self.output_entry_encrypt = tk.Entry(self.encrypt_frame, width=50)
         self.output_entry_encrypt.grid(row=1, column=1, padx=10)
-        tk.Button(self.encrypt_frame, text="Browse", command=self.browse_output_file_encrypt).grid(row=1, column=2, padx=10)
+        tk.Button(
+            self.encrypt_frame, text="Browse", command=self.browse_output_file_encrypt
+        ).grid(row=1, column=2, padx=10)
 
         tk.Label(self.encrypt_frame, text="Password:").grid(row=2, column=0, pady=5)
         self.password_entry_encrypt = tk.Entry(self.encrypt_frame, show="*", width=50)
         self.password_entry_encrypt.grid(row=2, column=1, padx=10)
 
-        tk.Label(self.encrypt_frame, text="Key Output File:").grid(row=3, column=0, pady=5)
+        tk.Label(self.encrypt_frame, text="Key Output File:").grid(
+            row=3, column=0, pady=5
+        )
         self.key_output_entry_encrypt = tk.Entry(self.encrypt_frame, width=50)
         self.key_output_entry_encrypt.grid(row=3, column=1, padx=10)
-        tk.Button(self.encrypt_frame, text="Browse", command=self.browse_key_output_file_encrypt).grid(row=3, column=2, padx=10)
+        tk.Button(
+            self.encrypt_frame,
+            text="Browse",
+            command=self.browse_key_output_file_encrypt,
+        ).grid(row=3, column=2, padx=10)
 
-        tk.Button(self.encrypt_frame, text="Encrypt", command=self.encrypt_file).grid(row=4, column=0, columnspan=3, pady=10)
+        tk.Button(self.encrypt_frame, text="Encrypt", command=self.encrypt_file).grid(
+            row=4, column=0, columnspan=3, pady=10
+        )
 
     def setup_decrypt_tab(self):
         tk.Label(self.decrypt_frame, text="Input File:").grid(row=0, column=0, pady=5)
         self.input_entry_decrypt = tk.Entry(self.decrypt_frame, width=50)
         self.input_entry_decrypt.grid(row=0, column=1, padx=10)
-        tk.Button(self.decrypt_frame, text="Browse", command=self.browse_input_file_decrypt).grid(row=0, column=2, padx=10)
+        tk.Button(
+            self.decrypt_frame, text="Browse", command=self.browse_input_file_decrypt
+        ).grid(row=0, column=2, padx=10)
 
         tk.Label(self.decrypt_frame, text="Output File:").grid(row=1, column=0, pady=5)
         self.output_entry_decrypt = tk.Entry(self.decrypt_frame, width=50)
         self.output_entry_decrypt.grid(row=1, column=1, padx=10)
-        tk.Button(self.decrypt_frame, text="Browse", command=self.browse_output_file_decrypt).grid(row=1, column=2, padx=10)
+        tk.Button(
+            self.decrypt_frame, text="Browse", command=self.browse_output_file_decrypt
+        ).grid(row=1, column=2, padx=10)
 
         # Checkbox to select decryption method
         self.use_aes_key_var = tk.BooleanVar()
-        tk.Checkbutton(self.decrypt_frame, text="Use AES Key", variable=self.use_aes_key_var, command=self.toggle_decrypt_method).grid(row=2, column=0, pady=5)
+        tk.Checkbutton(
+            self.decrypt_frame,
+            text="Use AES Key",
+            variable=self.use_aes_key_var,
+            command=self.toggle_decrypt_method,
+        ).grid(row=2, column=0, pady=5)
 
         # Password field
         tk.Label(self.decrypt_frame, text="Password:").grid(row=3, column=0, pady=5)
@@ -232,19 +252,25 @@ class AESWindow:
 
         # AES Key field
         tk.Label(self.decrypt_frame, text="AES Key File:").grid(row=4, column=0, pady=5)
-        self.aes_key_entry_decrypt = tk.Entry(self.decrypt_frame, width=50, state='disabled')
+        self.aes_key_entry_decrypt = tk.Entry(
+            self.decrypt_frame, width=50, state="disabled"
+        )
         self.aes_key_entry_decrypt.grid(row=4, column=1, padx=10)
-        tk.Button(self.decrypt_frame, text="Browse", command=self.browse_key_file_decrypt).grid(row=4, column=2, padx=10)
+        tk.Button(
+            self.decrypt_frame, text="Browse", command=self.browse_key_file_decrypt
+        ).grid(row=4, column=2, padx=10)
 
-        tk.Button(self.decrypt_frame, text="Decrypt", command=self.decrypt_file).grid(row=5, column=0, columnspan=3, pady=10)
+        tk.Button(self.decrypt_frame, text="Decrypt", command=self.decrypt_file).grid(
+            row=5, column=0, columnspan=3, pady=10
+        )
 
     def toggle_decrypt_method(self):
         if self.use_aes_key_var.get():
-            self.password_entry_decrypt.config(state='disabled')
-            self.aes_key_entry_decrypt.config(state='normal')
+            self.password_entry_decrypt.config(state="disabled")
+            self.aes_key_entry_decrypt.config(state="normal")
         else:
-            self.password_entry_decrypt.config(state='normal')
-            self.aes_key_entry_decrypt.config(state='disabled')
+            self.password_entry_decrypt.config(state="normal")
+            self.aes_key_entry_decrypt.config(state="disabled")
 
     def browse_input_file_encrypt(self):
         file_path = filedialog.askopenfilename()
@@ -282,7 +308,9 @@ class AESWindow:
 
         try:
             encrypt_file(input_file, output_file, password, key_output_file)
-            messagebox.showinfo("Success", f"File encrypted successfully and saved to {output_file}")
+            messagebox.showinfo(
+                "Success", f"File encrypted successfully and saved to {output_file}"
+            )
         except Exception as e:
             messagebox.showerror("Error", f"Encryption failed: {e}")
 
@@ -297,7 +325,9 @@ class AESWindow:
                 return
             try:
                 decrypt_file_with_key(input_file, output_file, key_file)
-                messagebox.showinfo("Success", f"File decrypted successfully and saved to {output_file}")
+                messagebox.showinfo(
+                    "Success", f"File decrypted successfully and saved to {output_file}"
+                )
             except Exception as e:
                 messagebox.showerror("Error", f"Decryption failed: {e}")
         else:
@@ -307,31 +337,34 @@ class AESWindow:
                 return
             try:
                 decrypt_file(input_file, output_file, password)
-                messagebox.showinfo("Success", f"File decrypted successfully and saved to {output_file}")
+                messagebox.showinfo(
+                    "Success", f"File decrypted successfully and saved to {output_file}"
+                )
             except Exception as e:
                 messagebox.showerror("Error", f"Decryption failed: {e}")
 
     def back_to_main(self):
         self.aes_frame.pack_forget()
         self.app.show_main_frame()
-        self.root.update_idletasks()  # Force UI to refresh            
+        self.root.update_idletasks()  # Force UI to refresh
 
 
 import tkinter as tk
 from tkinter import messagebox, filedialog, ttk
 from rsa_encryption import generate_rsa_keys, rsa_encrypt, rsa_decrypt
 
+
 class RSAWindow:
     def __init__(self, root, app):
         self.root = root
         self.app = app
-        
+
         self.rsa_frame = tk.Frame(root)
         self.rsa_frame.pack(padx=20, pady=20)
 
         # Create a Notebook (tabbed interface)
         self.notebook = ttk.Notebook(self.rsa_frame)
-        self.notebook.pack(expand=1, fill='both')
+        self.notebook.pack(expand=1, fill="both")
 
         # Create frames for each tab
         self.generate_keys_frame = ttk.Frame(self.notebook)
@@ -355,42 +388,74 @@ class RSAWindow:
         self.private_key_path = None
 
     def setup_generate_keys_tab(self):
-        tk.Label(self.generate_keys_frame, text="Save Keys To Folder:").grid(row=0, column=0, pady=5)
+        tk.Label(self.generate_keys_frame, text="Save Keys To Folder:").grid(
+            row=0, column=0, pady=5
+        )
         self.key_dir_entry = tk.Entry(self.generate_keys_frame, width=50)
         self.key_dir_entry.grid(row=0, column=1, padx=10)
-        tk.Button(self.generate_keys_frame, text="Browse", command=self.browse_key_directory).grid(row=0, column=2, padx=10)
+        tk.Button(
+            self.generate_keys_frame, text="Browse", command=self.browse_key_directory
+        ).grid(row=0, column=2, padx=10)
 
-        tk.Button(self.generate_keys_frame, text="Generate Keys", command=self.generate_keys).grid(row=1, column=0, pady=10, columnspan=3)
+        tk.Button(
+            self.generate_keys_frame, text="Generate Keys", command=self.generate_keys
+        ).grid(row=1, column=0, pady=10, columnspan=3)
 
     def setup_encrypt_tab(self):
         tk.Label(self.encrypt_frame, text="Input File:").grid(row=0, column=0, pady=5)
         self.input_entry_encrypt = tk.Entry(self.encrypt_frame, width=50)
         self.input_entry_encrypt.grid(row=0, column=1, padx=10)
-        tk.Button(self.encrypt_frame, text="Browse File", command=self.browse_input_file_encrypt).grid(row=0, column=2, padx=10)
+        tk.Button(
+            self.encrypt_frame,
+            text="Browse File",
+            command=self.browse_input_file_encrypt,
+        ).grid(row=0, column=2, padx=10)
 
         tk.Label(self.encrypt_frame, text="Output File:").grid(row=1, column=0, pady=5)
         self.output_entry_encrypt = tk.Entry(self.encrypt_frame, width=50)
         self.output_entry_encrypt.grid(row=1, column=1, padx=10)
-        tk.Button(self.encrypt_frame, text="Browse Output File", command=self.browse_output_file_encrypt).grid(row=1, column=2, padx=10)
+        tk.Button(
+            self.encrypt_frame,
+            text="Browse Output File",
+            command=self.browse_output_file_encrypt,
+        ).grid(row=1, column=2, padx=10)
 
-        tk.Button(self.encrypt_frame, text="Import Public Key", command=self.import_public_key).grid(row=2, column=0, columnspan=3, pady=5)
+        tk.Button(
+            self.encrypt_frame, text="Import Public Key", command=self.import_public_key
+        ).grid(row=2, column=0, columnspan=3, pady=5)
 
-        tk.Button(self.encrypt_frame, text="Encrypt", command=self.encrypt_file).grid(row=3, column=0, columnspan=3, pady=10)
+        tk.Button(self.encrypt_frame, text="Encrypt", command=self.encrypt_file).grid(
+            row=3, column=0, columnspan=3, pady=10
+        )
 
     def setup_decrypt_tab(self):
         tk.Label(self.decrypt_frame, text="Input File:").grid(row=0, column=0, pady=5)
         self.input_entry_decrypt = tk.Entry(self.decrypt_frame, width=50)
         self.input_entry_decrypt.grid(row=0, column=1, padx=10)
-        tk.Button(self.decrypt_frame, text="Browse File", command=self.browse_input_file_decrypt).grid(row=0, column=2, padx=10)
+        tk.Button(
+            self.decrypt_frame,
+            text="Browse File",
+            command=self.browse_input_file_decrypt,
+        ).grid(row=0, column=2, padx=10)
 
         tk.Label(self.decrypt_frame, text="Output File:").grid(row=1, column=0, pady=5)
         self.output_entry_decrypt = tk.Entry(self.decrypt_frame, width=50)
         self.output_entry_decrypt.grid(row=1, column=1, padx=10)
-        tk.Button(self.decrypt_frame, text="Browse Output File", command=self.browse_output_file_decrypt).grid(row=1, column=2, padx=10)
+        tk.Button(
+            self.decrypt_frame,
+            text="Browse Output File",
+            command=self.browse_output_file_decrypt,
+        ).grid(row=1, column=2, padx=10)
 
-        tk.Button(self.decrypt_frame, text="Import Private Key", command=self.import_private_key).grid(row=2, column=0, columnspan=3, pady=5)
+        tk.Button(
+            self.decrypt_frame,
+            text="Import Private Key",
+            command=self.import_private_key,
+        ).grid(row=2, column=0, columnspan=3, pady=5)
 
-        tk.Button(self.decrypt_frame, text="Decrypt", command=self.decrypt_file).grid(row=3, column=0, columnspan=3, pady=10)
+        tk.Button(self.decrypt_frame, text="Decrypt", command=self.decrypt_file).grid(
+            row=3, column=0, columnspan=3, pady=10
+        )
 
     def browse_key_directory(self):
         directory = filedialog.askdirectory()
@@ -460,7 +525,9 @@ class RSAWindow:
         public_key_path = self.public_key_path
 
         if not input_file or not output_file or not public_key_path:
-            messagebox.showerror("Error", "Input, output, and public key paths are required!")
+            messagebox.showerror(
+                "Error", "Input, output, and public key paths are required!"
+            )
             return
 
         try:
@@ -469,7 +536,9 @@ class RSAWindow:
             encrypted_data = rsa_encrypt(data, public_key_path)
             with open(output_file, "wb") as f:
                 f.write(encrypted_data)
-            messagebox.showinfo("Success", f"File encrypted successfully and saved to {output_file}")
+            messagebox.showinfo(
+                "Success", f"File encrypted successfully and saved to {output_file}"
+            )
         except Exception as e:
             messagebox.showerror("Error", f"Encryption failed: {e}")
 
@@ -479,7 +548,9 @@ class RSAWindow:
         private_key_path = self.private_key_path
 
         if not input_file or not output_file or not private_key_path:
-            messagebox.showerror("Error", "Input, output, and private key paths are required!")
+            messagebox.showerror(
+                "Error", "Input, output, and private key paths are required!"
+            )
             return
 
         try:
@@ -488,14 +559,17 @@ class RSAWindow:
             decrypted_data = rsa_decrypt(encrypted_data, private_key_path)
             with open(output_file, "wb") as f:
                 f.write(decrypted_data)
-            messagebox.showinfo("Success", f"File decrypted successfully and saved to {output_file}")
+            messagebox.showinfo(
+                "Success", f"File decrypted successfully and saved to {output_file}"
+            )
         except Exception as e:
             messagebox.showerror("Error", f"Decryption failed: {e}")
 
     def back_to_main(self):
         self.rsa_frame.pack_forget()
         self.app.show_main_frame()
-        self.root.update_idletasks()  # Force UI to refresh                                                                                                            
+        self.root.update_idletasks()  # Force UI to refresh
+
 
 if __name__ == "__main__":
     root = tk.Tk()
